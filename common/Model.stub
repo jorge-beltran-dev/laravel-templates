@@ -1,12 +1,26 @@
 <?php namespace $NAMESPACE_MODEL$;
 
 use $NAMESPACE_MODEL_EXTEND$ as Model;
+use Artvisual\Tools\UuidTrait;
+
 $SOFT_DELETE_IMPORT$
 class $MODEL_NAME$ extends Model
 {
     $SOFT_DELETE$
 	public $table = "$TABLE_NAME$";
     $SOFT_DELETE_DATES$
+
+    /**
+     * Use UUID as primary key
+     */
+    use UuidTrait; 
+    /**
+     * Turn off auto-incrementing.
+     *
+     * @var bool
+     */
+ 
+    public $incrementing = false;
 
 	public $fillable = [
 	    $FIELDS$

@@ -1,9 +1,8 @@
 <?php namespace $NAMESPACE_CONTROLLER$;
 
-use $NAMESPACE_REQUEST$;
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
 use $NAMESPACE_REQUEST$\Create$MODEL_NAME$Request;
 use $NAMESPACE_REQUEST$\Update$MODEL_NAME$Request;
-use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
 use Flash;
 use $BASE_CONTROLLER$ as Controller;
 use Response;
@@ -11,12 +10,12 @@ use Response;
 class $MODEL_NAME$Controller extends Controller
 {
 
-	/** @var  $MODEL_NAME$Repository */
-	private $$MODEL_NAME_CAMEL$Repository;
+	/** @var  $MODEL_NAME$ */
+	private $$MODEL_NAME_CAMEL$;
 
-	function __construct($MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repo)
+	function __construct($MODEL_NAME$ $$MODEL_NAME_CAMEL$)
 	{
-		$this->$MODEL_NAME_CAMEL$Repository = $$MODEL_NAME_CAMEL$Repo;
+		$this->$MODEL_NAME_CAMEL$ = $$MODEL_NAME_CAMEL$;
 	}
 
 	/**
@@ -26,7 +25,7 @@ class $MODEL_NAME$Controller extends Controller
 	 */
 	public function index()
 	{
-		$$MODEL_NAME_PLURAL_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->$RENDER_TYPE$;
+		$$MODEL_NAME_PLURAL_CAMEL$ = $this->$MODEL_NAME_CAMEL$->paginate(20);
 
 		return view('$MODEL_NAME_PLURAL_CAMEL$.index')
 			->with('$MODEL_NAME_PLURAL_CAMEL$', $$MODEL_NAME_PLURAL_CAMEL$);
@@ -53,7 +52,7 @@ class $MODEL_NAME$Controller extends Controller
 	{
 		$input = $request->all();
 
-		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->create($input);
+		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$->create($input);
 
 		Flash::success('$MODEL_NAME$ saved successfully.');
 
@@ -90,7 +89,7 @@ class $MODEL_NAME$Controller extends Controller
 	 */
 	public function edit($id)
 	{
-		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find($id);
+		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$->find($id);
 
 		if(empty($$MODEL_NAME_CAMEL$))
 		{
@@ -112,7 +111,7 @@ class $MODEL_NAME$Controller extends Controller
 	 */
 	public function update($id, Update$MODEL_NAME$Request $request)
 	{
-		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find($id);
+		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$->find($id);
 
 		if(empty($$MODEL_NAME_CAMEL$))
 		{
@@ -121,7 +120,7 @@ class $MODEL_NAME$Controller extends Controller
 			return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
 		}
 
-		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->updateRich($request->all(), $id);
+		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$->find($id)->update($request->all());
 
 		Flash::success('$MODEL_NAME$ updated successfully.');
 
@@ -137,7 +136,7 @@ class $MODEL_NAME$Controller extends Controller
 	 */
 	public function destroy($id)
 	{
-		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find($id);
+		$$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$->find($id);
 
 		if(empty($$MODEL_NAME_CAMEL$))
 		{
@@ -146,7 +145,7 @@ class $MODEL_NAME$Controller extends Controller
 			return redirect(route('$MODEL_NAME_PLURAL_CAMEL$.index'));
 		}
 
-		$this->$MODEL_NAME_CAMEL$Repository->delete($id);
+		$this->$MODEL_NAME_CAMEL$->destroy($id);
 
 		Flash::success('$MODEL_NAME$ deleted successfully.');
 
